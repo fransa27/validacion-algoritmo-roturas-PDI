@@ -33,7 +33,7 @@ int openingMorphological()
     }
     // Create a structuring element
     int morph_size = 2;
-    Mat element = getStructuringElement(MORPH_ELLIPSE, Size(4, 3)); //Elemento estucturante
+    Mat element = getStructuringElement(MORPH_RECT, Size(3, 4)); //Elemento estucturante
     Mat output;
 
 
