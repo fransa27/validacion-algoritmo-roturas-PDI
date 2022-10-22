@@ -18,7 +18,7 @@ const int kernel_size = 3;
 const char* window_name = "Opening";
 int openingMorphological()
 {
-    Mat dst, detected_edges;
+    Mat canny,dst,detected_edges;
     // Reading the Image
     Mat image = imread("C:/Users/jorge/Pictures/OpenCV/capture1.jpg", IMREAD_GRAYSCALE); //Cambiar la ruta de la imagen yo usaba una captura de los videos de mallas
     int cols = image.cols, rows = image.rows;
@@ -33,7 +33,7 @@ int openingMorphological()
     }
     // Create a structuring element
     int morph_size = 2;
-    Mat element = getStructuringElement(MORPH_ELLIPSE , Size(4, 3)); //Elemento estucturante
+    Mat element = getStructuringElement(MORPH_ELLIPSE, Size(4, 3)); //Elemento estucturante
     Mat output;
 
 
@@ -45,13 +45,21 @@ int openingMorphological()
         Point(-1, -1), 2);
     //Lo que me faltaba hacer es buscar cual elemento estructurante es mejor y entender que es Point(-1, -1), 2
     imshow("Opening", output);
-    
+
+    canny.create(image.size(), image.type());
+    blur(image, detected_edges, Size(2, 2)); //output es una imagen en GRAYSCALE
+    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * radio, kernel_size);
+    canny = Scalar::all(0);
+    image.copyTo(canny, detected_edges);
+    imshow("Canny", canny);
+
+
     dst.create(output.size(), output.type());
     blur(output, detected_edges, Size(2, 2)); //output es una imagen en GRAYSCALE
     Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * radio, kernel_size);
     dst = Scalar::all(0);
     output.copyTo(dst, detected_edges);
-    imshow("Canny + Opening",dst);
+    imshow("Canny + Opening", dst);
 
 
     namedWindow(window_name, WINDOW_AUTOSIZE);
