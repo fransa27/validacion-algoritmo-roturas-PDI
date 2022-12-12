@@ -41,9 +41,12 @@ while cap.isOpened():
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2Lab)
     l, _, _ = cv2.split(lab)
 
-    # Net or background segmentation
-    th = cv2.adaptiveThreshold(l, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
-                               cv2.THRESH_BINARY, 75, 0)
+    # Net or background segmentation using Gaussian threshold
+    th = cv2.adaptiveThreshold(l, 255,
+	cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 75, 0) 
+
+    #th = cv2.adaptiveThreshold(l, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
+    #                           cv2.THRESH_BINARY, 75, 0)
 
     nWhitePixels = cv2.countNonZero(th)
     nPixels = height * width

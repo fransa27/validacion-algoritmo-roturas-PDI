@@ -32,9 +32,16 @@ l, a, b = cv2.split(lab)
 # Image filtering
 # l = cv2.GaussianBlur(l, (15,15), 0)
 
-# Segmentation with adaptive theshold
-th = cv2.adaptiveThreshold(l, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
-                           cv2.THRESH_BINARY, 85, 0)
+# Segmentation with adaptive theshold with THRESH GAUSSIAN
+
+th = cv2.adaptiveThreshold(l, 255,
+	cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 85, 0)  
+
+#th = cv2.adaptiveThreshold(l, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
+#                           cv2.THRESH_BINARY, 85, 0)
+
+ 
+
 # _,th2 = cv2.threshold(l,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 cv2.imshow('Th', th)
 nWhitePixels = cv2.countNonZero(th)
